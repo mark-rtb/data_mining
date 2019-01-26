@@ -110,7 +110,7 @@ def main():
     file_name = 'loanform_features.csv'
 #   the name of the data file
 
-    list_drop_name = ['ORDERID', 'APPROVED', 'ISSUED', 'SHTRAFDAYSQUANT']
+    list_drop_name = ['ORDERID', 'APPROVED', 'ISSUED', 'SHTRAFDAYSQUANT', 'ORDERSTATUS']
 #   list of columns not involved in this stage of analysis
 
     binary_attribute = 'BAD'
@@ -128,7 +128,7 @@ def main():
 #    run the analysis to determine the factors affecting the loan default
 
 
-    list_drop_name = ['ORDERID', 'BAD', 'ISSUED', 'SHTRAFDAYSQUANT']
+    list_drop_name = ['ORDERID', 'BAD', 'ISSUED', 'SHTRAFDAYSQUANT', 'ORDERSTATUS']
     binary_attribute = 'APPROVED'
     key_bin_words_0, key_bin_words_1 = 'отказано', 'одобрено'
 #   we re-declare variables to change the key factor of the analysis
