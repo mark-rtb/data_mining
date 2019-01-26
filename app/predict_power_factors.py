@@ -3,14 +3,15 @@ The program is designed to analyze customer data during credit scoring.
 when you call, you must enter the directory with the file of the customer data
 @author: mark-rtb
 """
-#import core libraries
+
 import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-#import information value (IV) calculation function-measures
-from Inf_val import data_vars
+#import core libraries
 
+from Inf_val import data_vars
+#import information value (IV) calculation function-measures
 
 def read_data(dir_name, file_name):
     """ The function of reading data for analysis in the format .csv
