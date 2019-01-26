@@ -6,7 +6,6 @@ from pandas import Series
 import scipy.stats.stats as stats
 import re
 import traceback
-import string
 
 max_bin = 20
 force_bin = 3
