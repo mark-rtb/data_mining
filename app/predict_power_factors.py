@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 from Inf_val import data_vars
 #import information value (IV) calculation function-measures
 
+
 def read_data(dir_name, file_name):
     """ The function of reading data for analysis in the format .csv
     On input accepts-the directory in which the file is located and
@@ -27,6 +28,7 @@ def read_data(dir_name, file_name):
 #   read data from a file .csv and create a pandas Dataframe
 
     return load_dat_df
+
 
 def preprocessing_df(list_drop_name, binary_attribute, key_bin_words_0,
                      key_bin_words_1, df):
@@ -98,6 +100,7 @@ def save_inf_val(inf_val, binary_attribute, dir_name):
     inf_val.to_pickle(path_to_file)
 #   saving file
 
+
 def main():
     """ The function initializes the variables and performs the calculation
     functions in the order necessary to obtain lists of factors affecting
@@ -110,7 +113,8 @@ def main():
     file_name = 'loanform_features.csv'
 #   the name of the data file
 
-    list_drop_name = ['ORDERID', 'APPROVED', 'ISSUED', 'SHTRAFDAYSQUANT', 'ORDERSTATUS']
+    list_drop_name = ['ORDERID', 'APPROVED', 'ISSUED', 'SHTRAFDAYSQUANT',
+                      'ORDERSTATUS']
 #   list of columns not involved in this stage of analysis
 
     binary_attribute = 'BAD'
@@ -128,7 +132,8 @@ def main():
 #    run the analysis to determine the factors affecting the loan default
 
 
-    list_drop_name = ['ORDERID', 'BAD', 'ISSUED', 'SHTRAFDAYSQUANT', 'ORDERSTATUS']
+    list_drop_name = ['ORDERID', 'BAD', 'ISSUED', 'SHTRAFDAYSQUANT',
+                      'ORDERSTATUS']
     binary_attribute = 'APPROVED'
     key_bin_words_0, key_bin_words_1 = 'отказано', 'одобрено'
 #   we re-declare variables to change the key factor of the analysis
