@@ -54,7 +54,12 @@ def preprocessing_df(list_drop_name, binary_attribute, key_bin_words_0,
     return df
 
 def data_set_create(df, binary_attribute):
-
+    """ A function of training dataset.
+    Produces a regularization of the data and the breakdown of the sample 
+    into test and training
+    the input takes prepared DataFrame and the name of the column with labels.
+    The output is ready to feed data into the network."""
+    
     X = df.iloc[:,1:].values
     y = df[binary_attribute].values
 
@@ -67,19 +72,23 @@ def data_set_create(df, binary_attribute):
     scale_features_mm = MinMaxScaler() 
     features_train = scale_features_mm.fit_transform(features_train) 
 
-    X_train, X_test, y_train, y_test = train_test_split(features_train, y, test_size=0.2, random_state=55)
+    X_train, X_test, y_train, y_test = train_test_split(features_train, y,
+                                                        test_size=0.2,
+                                                        random_state=55)
 
     return X_train, X_test, y_train, y_test
 
 
 def neural_network_create(X_train, input_features):
-
+    """ The function of iterative model creation 
+    with the number of inputs equal to the number of columns with data. """
+    
     def input_DFS():
         input_model = Input(shape=(1,))
         return input_model
     
     def Dence_lauer(i, inp):
-        hiden = Dense(1, activation='relu')(inp[i])
+        hiden = Dense(1, activation='tanh')(inp[i])
         return hiden
     
     inp =[]
@@ -91,8 +100,10 @@ def neural_network_create(X_train, input_features):
         dence.append(Dence_lauer(i, inp))
         
     merge = Add()(dence)
-    hid = Dense(input_features, activation='relu')(merge)
-    b = Dense(1, activation='sigmoid')(hid)
+    hid = Dense(input_features, activation='linear')(merge)
+    hid2 = Dense(input_features*2, activation='tanh')(hid)
+    hid3 = Dense(input_features, activation='tanh')(hid2)
+    b = Dense(1, activation='sigmoid')(hid3)
         
     model = Model(inputs=inp, outputs=b)
        
@@ -102,7 +113,9 @@ def neural_network_create(X_train, input_features):
     return model
 
 def model_fit(model, X_train, X_test, y_train, y_test, batch_size, num_epochs):
-
+    """ The function of the training model.
+    The input receives the compiled model and training data.
+    The output is a trained model """
     
     list_Xtrain = []
     for input_data in range(X_train.shape[1]):
@@ -115,7 +128,10 @@ def model_fit(model, X_train, X_test, y_train, y_test, batch_size, num_epochs):
     return model
 
 def calc_deepFS(model, X_train, df):
-
+    """ The function of calculating the significance of features.
+    Retrieves the weight of the first layer of the network receives a label and 
+    associating the weight with labels. Sorts by value """
+    
     x = model.get_weights()
     list_weight = []
     for value in range(X_train.shape[1]*2):
@@ -148,8 +164,8 @@ def main():
     
     dir_name = 'D:\\DeepFeatureSelection\\keras_app\\'
     
-    batch_size = 32 
-    num_epochs = 300 
+    batch_size = 40 
+    num_epochs = 50 
     
     df_load = read_data(dir_name, file_name)
     
@@ -165,6 +181,7 @@ def main():
     model = model_fit(model, X_train, X_test, y_train, y_test, batch_size, num_epochs)
     
     df_DFS = calc_deepFS(model, X_train, df)
+
 
     print(df_DFS.sort_values(by='value', ascending=False))
     
